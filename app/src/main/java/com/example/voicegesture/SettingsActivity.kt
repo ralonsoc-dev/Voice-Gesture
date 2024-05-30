@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.voicegesture.model.Language
 import com.example.voicegesture.model.Languages
 import com.example.voicegesture.model.LanguagesArrayAdapter
-import com.example.voicegesture.model.People
-import com.example.voicegesture.model.PeopleArrayAdapter
-import com.example.voicegesture.model.Person
 import com.example.voicegesture.model.TextToVoice
 
 class SettingsActivity : AppCompatActivity() {
