@@ -10,8 +10,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-
 class TextToVoice(private val context: Context) {
+
     lateinit var tts: TextToSpeech
     lateinit var lenguaje: Locale
     private var translator: Translator = Translator()
@@ -19,9 +19,11 @@ class TextToVoice(private val context: Context) {
 
     companion object {
         const val KEY_SELECTED_LANGUAGE = "selected_language"
-        const val KEY_SELECTED_VOICE = "selected_voice"
     }
 
+    /**
+     * Iniciar clase
+     */
     fun initTTS() {
         val selectedLanguage = getLanguage()
 
@@ -44,6 +46,7 @@ class TextToVoice(private val context: Context) {
 
     /**
      * Se encarga de convertir el texto en voz
+     * @param text Texto a traducir y hablar
      */
     fun translate(text: String){
         var translatedText: String = ""
@@ -70,6 +73,7 @@ class TextToVoice(private val context: Context) {
 
     /**
      * Settear lenguaje en sharedPreferences
+     * @param language Lenguaje seleccionado
      */
     fun setLanguage(language: String) {
         var key: String = ""
@@ -106,47 +110,5 @@ class TextToVoice(private val context: Context) {
                 apply()
             }
         }
-    }
-
-
-
-    /**
-     * Settear voz en sharedPreferences
-     */
-    fun setVoice(voice: String) {
-        when (voice) {
-            "Mujer" -> {
-                val voices = tts.voices
-                for (v in voices) {
-                    Log.d("RAUL", "1.- ${v}")
-                    if (v.getLocale().equals(lenguaje) && v.name.contains("female")) {
-                        tts.setVoice(v)
-                        break
-                    }
-                }
-            }
-            "Hombre" -> {
-                val voices = tts.voices
-                for (v in voices) {
-                    Log.d("RAUL", "2.- ${v}")
-                    if (v.getLocale().equals(lenguaje) && v.name.contains("male")) {
-                        tts.setVoice(v)
-                        break
-                    }
-                }
-            }
-        }
-
-        with(sharedPreferences.edit()) {
-            putString(KEY_SELECTED_VOICE, voice)
-            apply()
-        }
-    }
-
-    /**
-     * Coger voz guardada en sharedPreferences
-     */
-    fun getVoice(): String? {
-        return sharedPreferences.getString(KEY_SELECTED_VOICE, "male")
     }
 }

@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Mostrar msg toast
+     * @param message Mensaje a mostrar en el Toast
      */
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

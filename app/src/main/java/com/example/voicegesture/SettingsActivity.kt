@@ -21,11 +21,9 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var  textToVoice: TextToVoice
     lateinit var btnSave: Button
     lateinit var btnReturn: Button
-    lateinit var spinnerVoz: Spinner
     lateinit var spinnerIdioma: Spinner
 
     private var selectedLanguage: Language? = null
-    private var selectedPerson: Person? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,40 +43,9 @@ class SettingsActivity : AppCompatActivity() {
         btnReturn.setOnClickListener(clickListener)
 
         // Enlazo los spinner de la vista
-        spinnerVoz = findViewById(R.id.spinnerVoz)
         spinnerIdioma = findViewById(R.id.spinnerIdioma)
 
-        initSpinner()
-    }
-
-    /**
-     * Cargo los spinner
-     */
-    fun initSpinner() {
-        // Relleno el spiner de voz
-        configSpinnerVoz()
-
-        // Relleno el spiner de idiomas
         configSpinnerIdioma()
-    }
-
-    /**
-     * Configuracion del Spinner Voz
-     */
-    private fun configSpinnerVoz() {
-        val voiceList = listOf("Mujer", "Hombre")
-        val voiceAdapter = PeopleArrayAdapter(this, People.list!!)
-        voiceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerVoz.adapter = voiceAdapter
-
-        spinnerVoz.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedPerson = parent?.getItemAtPosition(position) as Person
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso en el que no se selecciona nada
-            }
-        }
     }
 
     /**
@@ -117,14 +84,15 @@ class SettingsActivity : AppCompatActivity() {
      * Guardar la configuración de voz e idioma
      */
     fun save() {
-        if (null != selectedLanguage && null != selectedPerson) {
+        if (null != selectedLanguage) {
             textToVoice.setLanguage(selectedLanguage!!.name)
-            textToVoice.setVoice(selectedPerson!!.name)
+            showToast("Configuración guardada correctamente")
         }
     }
 
     /**
      * Mostrar msg toast
+     * @param message Mensaje a mostrar en el Toast
      */
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
