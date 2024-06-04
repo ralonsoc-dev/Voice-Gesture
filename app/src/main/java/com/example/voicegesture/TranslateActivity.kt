@@ -14,7 +14,7 @@ class TranslateActivity : AppCompatActivity() {
     lateinit var textToVoice: TextToVoice
     lateinit var btnTranslate: Button
     lateinit var btnSettings: Button
-
+    var contador: Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,33 +39,28 @@ class TranslateActivity : AppCompatActivity() {
     private val clickListener = View.OnClickListener { view ->
         when (view.id){
             R.id.btnTranslete1 -> {
-                textToVoice.translate("Comienzo o que lo que loco, yo no se pero tu que")
-
-                val data = listOf(
-                    doubleArrayOf(11.0, -6.0, 44.0, 9.0, 4.0, -5.38, -4.42, 6.36, 35.39, 1.42, -0.37),
-                    doubleArrayOf(25.0, 37.0, 35.0, 1.0, -2.0, -5.39, -4.33, 6.38, 35.02, 1.43, -0.48),
-                    doubleArrayOf(13.0, 54.0, 45.0, 16.0, 12.0, -5.40, -4.33, 6.39, 34.40, 1.30, -0.60),
-                    doubleArrayOf(20.0, 2.0, 0.0, 19.0, 5.0, -5.28, -4.33, 6.35, 35.11, 1.55, -0.50),
-                    doubleArrayOf(8.0, -5.0, 30.0, 23.0, 28.0, -5.38, -4.40, 6.33, 34.97, 1.60, -0.48)
-                )
-
-                // Crear una instancia de FourierTransformer
-                val transformer = FourierTransformer(data)
-
-                // Calcular la DFT para la matriz de datos
-                val dftResult = transformer.dft()
-
-                Log.d("Rata", "-------------------------------------------------")
-                // Imprimir los resultados
-                dftResult.forEach { row ->
-                    row.forEach { println(it) }
-                    println()
-                }
-                Log.d("Rata", "-------------------------------------------------")
+                traducir()
             }
             R.id.btnReturn1 -> {
                 finish()
             }
         }
+    }
+
+    private fun traducir() {
+
+        val data = listOf(
+            "Hola",
+            "Buenas tardes",
+            "Gracias",
+            "Preguntar",
+            "Lengua de signos"
+        )
+        Log.d("TRADUCIR", "a ${contador} y ${data.get(contador)}")
+        textToVoice.translate(data.get(contador))
+
+        contador += 1
+        if (contador == 5)
+            contador = 0
     }
 }

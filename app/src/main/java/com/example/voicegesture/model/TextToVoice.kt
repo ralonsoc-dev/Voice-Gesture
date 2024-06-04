@@ -49,11 +49,12 @@ class TextToVoice(private val context: Context) {
      * @param text Texto a traducir y hablar
      */
     fun translate(text: String){
+
         var translatedText: String = ""
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 var to = getLanguage()?: "es"
-                Log.d("TRADUCIR", "AQWUE: $to")
+                Log.d("TRADUCIR", "To: $to text: ${text}")
                 translatedText = translator.translateText("es", to, text)
                 Log.d("TRADUCIR", "Texto traducido: $translatedText")
                 delay(300)

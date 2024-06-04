@@ -21,14 +21,17 @@ class Translator {
      * @param text Texto a traducir
      */
     suspend fun translateText(from: String, to: String, text: String): String {
+        Log.d("TRADUCIR", "text1 ${text}")
         return suspendCancellableCoroutine { continuation ->
             translatorOptions = TranslatorOptions.Builder()
                 .setSourceLanguage(from)
                 .setTargetLanguage(to)
                 .build()
 
+            Log.d("TRADUCIR", "text2 ${text}")
             translator = Translation.getClient(translatorOptions)
 
+            Log.d("TRADUCIR", "text3 ${text}")
             val downloadConditions = DownloadConditions.Builder()
                 .requireWifi()
                 .build()
@@ -37,7 +40,7 @@ class Translator {
                 .addOnSuccessListener {
                     translator.translate(text)
                         .addOnSuccessListener { translatedText ->
-                            Log.d("TRADUCIR", "Traducido1 $translatedText")
+                            Log.d("TRADUCIR", "text4 ${text} text4 ${translatedText}")
                             continuation.resume(translatedText)
                         }
                         .addOnFailureListener { e ->
