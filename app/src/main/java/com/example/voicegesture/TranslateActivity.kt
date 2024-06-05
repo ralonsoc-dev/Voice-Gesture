@@ -1,10 +1,18 @@
 package com.example.voicegesture
 
+import ReadBluetooth
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.example.voicegesture.model.FourierTransformer
 import com.example.voicegesture.model.TextToVoice
 
 class TranslateActivity : AppCompatActivity() {
@@ -18,6 +26,8 @@ class TranslateActivity : AppCompatActivity() {
     lateinit var btn4: Button
     lateinit var btn5: Button
     var contador: Int = 0;
+
+    private lateinit var bluetoothManager: ReadBluetooth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +87,14 @@ class TranslateActivity : AppCompatActivity() {
     }
 
     private fun traducir() {
+        bluetoothManager = ReadBluetooth(this, "Tu Gesto es mi Voz")
+        if (bluetoothManager.connectToDevice()) {
+            var dato = bluetoothManager.readData()
+            val datos: List<Double> = dato.split(",").map { it.toDouble() }
+            var fourierTransformer = FourierTransformer(datos)
+        } else {
+            Log.d("TRADUCIR", "ERROR")
+        }
 
         val data = listOf(
             "Hola",

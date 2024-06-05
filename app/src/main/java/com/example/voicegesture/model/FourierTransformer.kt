@@ -6,40 +6,27 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class FourierTransformer(private val data: List<DoubleArray>) {
-
-//    fun performFFT(wave: DoubleArray): DoubleArray {
-//        return FFT.fft(wave)
-//    }
-
+class FourierTransformer(private val data: List<Double>) {
 
     /**
-     * Calcula la Transformada Discreta de Fourier (DFT) para una fila de datos
-     * @param x
+     * Calcula la Transformada Discreta de Fourier (DFT) para la lista de datos
      */
-    private fun dftRow(x: DoubleArray): Array<Complex> {
-        val n = x.size
-        val result = Array(n) { Complex(0.0, 0.0) }
+    fun dft(): List<Complex> {
+        val n = data.size
+        val result = mutableListOf<Complex>()
 
         for (k in 0 until n) {
             var re = 0.0
             var im = 0.0
             for (t in 0 until n) {
                 val angle = 2 * PI * k * t / n
-                re += x[t] * cos(angle)
-                im -= x[t] * sin(angle)
+                re += data[t] * cos(angle)
+                im -= data[t] * sin(angle)
             }
-            result[k] = Complex(re, im)
+            result.add(Complex(re, im))
         }
 
         return result
-    }
-
-    /**
-     * Calcula la Transformada de Fourier Discreta (DFT) para la matriz de datos
-     */
-    fun dft(): List<Array<Complex>> {
-        return data.map { dftRow(it) }
     }
 
     data class Complex(val real: Double, val imaginary: Double) {
