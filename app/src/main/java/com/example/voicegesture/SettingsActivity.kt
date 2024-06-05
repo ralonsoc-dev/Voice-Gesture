@@ -19,7 +19,6 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var btnSave: Button
     lateinit var btnReturn: Button
     lateinit var spinnerIdioma: Spinner
-
     private var selectedLanguage: Language? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
                 selectedLanguage = parent?.getItemAtPosition(position) as Language
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso en el que no se selecciona nada
+                // Para manejar el caso en el que no se seleccione nada
             }
         }
     }

@@ -5,6 +5,18 @@
     android:background="@drawable/background">
 
 
+    <Spinner
+        android:id="@+id/spinnerIdioma"
+        android:layout_width="225dp"
+        android:layout_height="70dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.302" />
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="236dp"
@@ -20,18 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
-    <Spinner
-        android:id="@+id/spinnerIdioma"
-        android:layout_width="225dp"
-        android:layout_height="70dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.266" />
 
     <Button
         android:id="@+id/btnReturn"

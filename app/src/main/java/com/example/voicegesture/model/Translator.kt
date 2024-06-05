@@ -21,35 +21,33 @@ class Translator {
      * @param text Texto a traducir
      */
     suspend fun translateText(from: String, to: String, text: String): String {
-        Log.d("TRADUCIR", "text1 ${text}")
         return suspendCancellableCoroutine { continuation ->
+            // Configuración de opciones del traductor
             translatorOptions = TranslatorOptions.Builder()
                 .setSourceLanguage(from)
                 .setTargetLanguage(to)
                 .build()
-
-            Log.d("TRADUCIR", "text2 ${text}")
             translator = Translation.getClient(translatorOptions)
 
-            Log.d("TRADUCIR", "text3 ${text}")
+            // Para descargar el modelo de traducción
             val downloadConditions = DownloadConditions.Builder()
                 .requireWifi()
                 .build()
 
+            // Descarga el modelo de traduccion si es necesario
             translator.downloadModelIfNeeded(downloadConditions)
                 .addOnSuccessListener {
                     translator.translate(text)
                         .addOnSuccessListener { translatedText ->
-                            Log.d("TRADUCIR", "text4 ${text} text4 ${translatedText}")
                             continuation.resume(translatedText)
                         }
                         .addOnFailureListener { e ->
-                            Log.d("TRADUCIR", "ERROR 1 $e")
+                            Log.d("TRADUCIR", "Error al traducir: $e")
                             continuation.resumeWithException(e)
                         }
                 }
                 .addOnFailureListener { e ->
-                    Log.d("TRADUCIR", "ERROR $e")
+                    Log.d("TRADUCIR", "Error al descargar el modelo: $e")
                     continuation.resumeWithException(e)
                 }
         }
