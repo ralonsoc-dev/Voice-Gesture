@@ -9,94 +9,9 @@
     android:background="@drawable/background">
 
     <Button
-        android:id="@+id/btn1"
-        android:layout_width="72dp"
-        android:layout_height="82dp"
-        android:background="@drawable/background"
-        android:backgroundTint="@null"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548" />
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="72dp"
-        android:layout_height="82dp"
-        android:background="@drawable/background"
-        android:backgroundTint="@null"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.312"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548" />
-
-    <Button
-        android:id="@+id/btn4"
-        android:layout_width="72dp"
-        android:layout_height="82dp"
-        android:background="@drawable/background"
-        android:backgroundTint="@null"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.587"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548" />
-
-    <Button
-        android:id="@+id/btn3"
-        android:layout_width="72dp"
-        android:layout_height="82dp"
-        android:background="@drawable/background"
-        android:backgroundTint="@null"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
-
-    <Button
-        android:id="@+id/btn5"
-        android:layout_width="72dp"
-        android:layout_height="82dp"
-        android:background="@drawable/background"
-        android:backgroundTint="@null"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.821" />
-
-    <Button
         android:id="@+id/btnReturn1"
-        android:layout_width="218dp"
-        android:layout_height="71dp"
+        android:layout_width="137dp"
+        android:layout_height="66dp"
         android:background="@drawable/btn"
         android:backgroundTint="@null"
         android:text="@string/volver"
@@ -106,38 +21,90 @@
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.975" />
 
     <Button
-        android:id="@+id/btnTranslete1"
+        android:id="@+id/btnDeletePalabra"
         android:layout_width="218dp"
         android:layout_height="71dp"
         android:background="@drawable/btn"
-        android:text="@string/leer_datos"
+        android:text="@string/borrar_palabra"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.677" />
+        app:layout_constraintVertical_bias="0.827" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="380dp"
-        android:layout_height="336dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTranslete1"
+    <Button
+        android:id="@+id/btnDeleteLetra"
+        android:layout_width="178dp"
+        android:layout_height="70dp"
+        android:background="@drawable/btn"
+        android:text="Del Letra"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.564" />
+
+    <Button
+        android:id="@+id/btnTranslateLetra"
+        android:layout_width="178dp"
+        android:layout_height="70dp"
+        android:background="@drawable/btn"
+        android:text="@string/leer_letra"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564" />
+
+    <Button
+        android:id="@+id/btnTranslate1"
+        android:layout_width="218dp"
+        android:layout_height="71dp"
+        android:background="@drawable/btn"
+        android:text="@string/leer_palabra"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.698" />
+
+    <TextView
+        android:id="@+id/textBox"
+        android:layout_width="327dp"
+        android:layout_height="169dp"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.161" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

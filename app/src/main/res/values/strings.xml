@@ -13,6 +13,9 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="todo">TODO</string>
     <string name="leer_datos">Leer Datos</string>
+    <string name="leer_letra">Leer Letra</string>
+    <string name="leer_palabra">Leer Palabra</string>
+    <string name="borrar_palabra">Borrar Palabra</string>
 
     <string-array name="languages">
         <item>Español</item>
