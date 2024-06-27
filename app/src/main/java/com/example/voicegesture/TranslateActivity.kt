@@ -78,10 +78,10 @@ class TranslateActivity : AppCompatActivity() {
                 textToVoice.translate("Gracias")
             }
             R.id.btn4 -> {
-                textToVoice.translate("Preguntar")
+                textToVoice.translate("")
             }
             R.id.btn5 -> {
-                textToVoice.translate("Lengua de signos")
+                textToVoice.translate("")
             }
         }
     }
@@ -99,9 +99,7 @@ class TranslateActivity : AppCompatActivity() {
         val data = listOf(
             "Hola",
             "Buenas tardes",
-            "Gracias",
-            "Preguntar",
-            "Lengua de signos"
+            "Gracias"
         )
 
         textToVoice.translate(data.get(contador))
