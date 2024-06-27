@@ -86,13 +86,13 @@ class TranslateActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
-                Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ALL_PERMISSIONS)
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.BLUETOOTH_CONNECT), REQUEST_ALL_PERMISSIONS)
             Log.e("PERMISOS", "Respuesta obtenida: ${hasPermissions()}")
         } else {
             Log.d("PERMISOS", "Permisos ya otorgados")
-
+            setupBluetooth()
             // Conectar al dispositivo Bluetooth
-            connectToDevice()
         }
     }
 
@@ -104,7 +104,6 @@ class TranslateActivity : AppCompatActivity() {
         if (requestCode == REQUEST_ALL_PERMISSIONS) {
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 Log.e("PERMISOS", "Los permisos fueron otorgados")
-                connectToDevice()
             } else {
                 // Algunos permisos no fueron concedidos, manejar esto según tus requerimientos
                 Log.e("PERMISOS", "Error al conceder los permisos")
@@ -117,9 +116,11 @@ class TranslateActivity : AppCompatActivity() {
      * Comprueba si tenemos los permisos necesarios
      */
     private fun hasPermissions(): Boolean {
+        Log.e("PERMISOS", "${ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED}")
         return ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
     }
 
     /**
@@ -197,57 +198,76 @@ class TranslateActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private fun connectToDevice() {
-        bluetoothDevice?.let { device ->
-            // Intentar conectar con el dispositivo Bluetooth
-            try {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                        REQUEST_ALL_PERMISSIONS)
-                    Log.e("Bluetooth", "err")
-                    return
-                }
-                bluetoothSocket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
-                bluetoothSocket?.connect()
-                inputStream = bluetoothSocket?.inputStream
-                Log.d("Bluetooth", "Conexión establecida con éxito")
+    private fun setupBluetooth() {
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
-                // Iniciar la recepción de datos
-                startListening()
+        if (bluetoothAdapter == null) {
+            Log.e("Bluetooth", "El dispositivo no soporta Bluetooth")
+            return
+        }
 
-            } catch (e: IOException) {
-                Log.e("Bluetooth", "Error al conectar: ${e.message}")
-                closeBluetoothConnection()
+        val deviceAddress = "00:00:00:00:00:00" // Reemplaza con la dirección MAC de tu dispositivo Bluetooth
+
+        val bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddress)
+
+        // UUID para el servicio Bluetooth (ejemplo para SPP)
+        val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                    REQUEST_ALL_PERMISSIONS
+                )
+                Log.d("Bluetooth", "Conectado a ${ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED}")
+
+                return
             }
+            val socket = bluetoothDevice.createRfcommSocketToServiceRecord(uuid)
+            socket.connect()
+            Log.d("Bluetooth", "Conectado a ${bluetoothDevice.name}")
+
+            // Lógica para leer datos del socket
+            readDataFromSocket(socket)
+
+        } catch (e: IOException) {
+            Log.e("Bluetooth", "Error al conectar", e)
         }
     }
 
-    private fun startListening() {
-        // Hilo para recibir datos en segundo plano
-        val thread = Thread {
+    private fun readDataFromSocket(socket: BluetoothSocket) {
+        try {
+            val inputStream = socket.inputStream
             val buffer = ByteArray(1024)
-            var bytes: Int
+            var bytesRead: Int
 
+            // Escucha continuamente los datos del inputStream
             while (true) {
-                try {
-                    // Leer datos del inputStream
-                    bytes = inputStream?.read(buffer) ?: -1
-                    if (bytes > 0) {
-                        val receivedData = String(buffer.copyOfRange(0, bytes))
-                        Log.d("Bluetooth", "Datos recibidos: $receivedData")
-                        // Aquí puedes procesar los datos recibidos según tus necesidades
-                    }
-                } catch (e: IOException) {
-                    Log.e("Bluetooth", "Error al leer datos: ${e.message}")
-                    break
+                bytesRead = inputStream.read(buffer)
+                val receivedMessage = String(buffer, 0, bytesRead)
+
+                // Procesa los datos recibidos según tu aplicación
+                Log.d("Bluetooth", "Datos recibidos: $receivedMessage")
+
+                // Ejemplo de cómo manejar los datos recibidos
+                runOnUiThread {
+                    // Actualizar la interfaz de usuario con los datos recibidos
+                    // Por ejemplo, mostrarlos en un TextView
+                    textBox.append(receivedMessage)
                 }
             }
+
+        } catch (e: IOException) {
+            Log.e("Bluetooth", "Error al leer datos del socket", e)
         }
-        thread.start()
     }
 
     private fun closeBluetoothConnection() {
